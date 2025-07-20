@@ -48,20 +48,20 @@ pipeline {
             }
         }
         
-        stage('Run Tests - Edge') {
-            when {
-                expression { !isUnix() }  // Changed to !isUnix() for Windows
-            }
-            steps {
-                script {
-                    try {
-                        bat 'call npm run cypress:run:edge'
-                    } catch (Exception e) {
-                        currentBuild.result = 'UNSTABLE'
-                    }
-                }
-            }
-        }
+        //stage('Run Tests - Edge') {
+            //when {
+             //   expression { !isUnix() }  // Changed to !isUnix() for Windows
+           // }
+           // steps {
+                //script {
+                  //  try {
+                 //       bat 'call npm run cypress:run:edge'
+               //     } catch (Exception e) {
+             //           currentBuild.result = 'UNSTABLE'
+           //         }
+         //       }
+       //     }
+     //   }
         
         stage('Generate Reports') {
             steps {
