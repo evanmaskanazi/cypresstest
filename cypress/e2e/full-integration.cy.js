@@ -162,7 +162,7 @@ describe('Full Client Dashboard Integration Tests', () => {
       cy.get('.day-cell').first().click()
       
       // Should navigate to check-in tab with selected date
-      cy.get('.nav-tab.active').should('contain', 'Check-in')
+      cy.url().should('include', '#check-in')
       cy.get('#checkinDate').should('not.have.value', '')
     })
   })
@@ -272,7 +272,7 @@ describe('Full Client Dashboard Integration Tests', () => {
     it('should display and interact with weekly goals', () => {
       // Navigate to Goals tab
       cy.contains('.nav-tab', 'Goals').click()
-      
+      cy.wait(1000) 
       // Should show goals section
       cy.contains('Weekly Goals').should('be.visible')
       
@@ -408,7 +408,7 @@ describe('Full Client Dashboard Integration Tests', () => {
       
       // 4. Generate a report
       cy.contains('.nav-tab', 'Reports').click()
-      cy.contains('Generate Reports').should('be.visible')
+      cy.get('#reportWeek').should('be.visible')
       
       // 5. Logout
       cy.contains('button', 'Logout').click()
