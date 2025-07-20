@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     
@@ -48,28 +49,35 @@ pipeline {
             }
         }
         
-        //stage('Run Tests - Edge') {
-            //when {
-             //   expression { !isUnix() }  // Changed to !isUnix() for Windows
-           // }
-           // steps {
-                //script {
-                  //  try {
-                 //       bat 'call npm run cypress:run:edge'
-               //     } catch (Exception e) {
-             //           currentBuild.result = 'UNSTABLE'
-           //         }
-         //       }
-       //     }
-     //   }
+        stage('Run Tests - Edge') {
+            when {
+                expression { false }  // Disable Edge tests
+            }
+            steps {
+                script {
+                    try {
+                        bat 'call npm run cypress:run:edge'
+                    } catch (Exception e) {
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
+            }
+        }
         
         stage('Generate Reports') {
             steps {
                 script {
-                    // Merge JSON reports
-                    bat 'call npm run report:merge'
+                    // Clean up any existing files first
+                    bat '''
+                        if exist cypress\\results\\combined.json del /f cypress\\results\\combined.json
+                        if exist cypress\\reports\\html rmdir /s /q cypress\\reports\\html
+                    '''
                     
-                    // Generate HTML report
+                    // Wait a moment to ensure file is deleted
+                    sleep(time: 2, unit: 'SECONDS')
+                    
+                    // Now merge and generate
+                    bat 'call npm run report:merge'
                     bat 'call npm run report:generate'
                 }
             }
