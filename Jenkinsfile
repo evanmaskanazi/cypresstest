@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     
@@ -85,24 +84,29 @@ pipeline {
         
         stage('Archive Results') {
             steps {
-                // Archive test results - fixed typos
+                // Archive test results
                 archiveArtifacts artifacts: 'cypress/results/*.html', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', allowEmptyArchive: true
                 
-                // Publish HTML report - fixed typo from 'publibat' to 'publishHTML'
+                // Publish HTML report
                 publishHTML([
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
-                    reportDir: 'cypress/results',
-                    reportFiles: 'report.html',
+                    reportDir: 'cypress/reports/html/cypress/results',
+                    reportFiles: 'combined.html',
                     reportName: 'Cypress Test Report',
                     reportTitles: 'E2E Test Results'
                 ])
                 
-                // Publish test results for trends
-                junit 'cypress/results/*.xml'
+                // Publish test results for trends - only if XML files exist
+                script {
+                    def xmlFiles = findFiles(glob: 'cypress/results/*.xml')
+                    if (xmlFiles.length > 0) {
+                        junit 'cypress/results/*.xml'
+                    }
+                }
             }
         }
     }
