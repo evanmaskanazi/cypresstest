@@ -177,7 +177,7 @@ describe('Full Client Dashboard Integration Tests', () => {
       cy.contains('.nav-tab', 'Reports').click()
       
       // Select current week
-      const currentWeek = new Date().toISOString().slice(0, 10).replace(/\d{2}$/, 'W' + Math.ceil(new Date().getDate() / 7))
+      const currentWeek = `${new Date().getFullYear()}-W${Math.ceil(new Date().getDate() / 7).toString().padStart(2, '0')}`;
       cy.get('#reportWeek').type(currentWeek)
       
       // Intercept the download request
@@ -203,7 +203,7 @@ describe('Full Client Dashboard Integration Tests', () => {
       cy.contains('.nav-tab', 'Reports').click()
       
       // Select current week
-      const currentWeek = new Date().toISOString().slice(0, 10).replace(/\d{2}$/, 'W' + Math.ceil(new Date().getDate() / 7))
+      const currentWeek = `${new Date().getFullYear()}-W${Math.ceil(new Date().getDate() / 7).toString().padStart(2, '0')}`;
       cy.get('#reportWeek').type(currentWeek)
       
       // Intercept the PDF request
@@ -229,7 +229,7 @@ describe('Full Client Dashboard Integration Tests', () => {
       cy.contains('.nav-tab', 'Reports').click()
       
       // Select current week
-      const currentWeek = new Date().toISOString().slice(0, 10).replace(/\d{2}$/, 'W' + Math.ceil(new Date().getDate() / 7))
+      const currentWeek = `${new Date().getFullYear()}-W${Math.ceil(new Date().getDate() / 7).toString().padStart(2, '0')}`;
       cy.get('#reportWeek').type(currentWeek)
       
       // Mock the API responses
