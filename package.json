@@ -16,8 +16,8 @@
     "test:smoke": "cypress run --spec 'cypress/e2e/smoke/**/*.cy.js'",
     "test:ci": "cypress run --record false",
     "test:parallel": "cypress run --record --parallel",
-    "report:merge": "mochawesome-merge cypress/results/*.json > cypress/results/combined.json",
-    "report:generate": "marge cypress/results/combined.json -f report -o cypress/results",
+    "report:merge": "mochawesome-merge cypress/results/*.json -o cypress/results/combined.json",
+    "report:generate": "marge cypress/results/combined.json -o cypress/reports/html",
     "test:with-report": "npm run test:ci && npm run report:merge && npm run report:generate",
     "clean:reports": "rm -rf cypress/results cypress/screenshots cypress/videos",
     "ci:test": "npm run clean:reports && npm run test:with-report"
